@@ -1,6 +1,7 @@
 #lang racket
 
 (require "../main.rkt")
+(require "../pixel-data.rkt")
 
 (define c (cv-create-camera-capture))
 (cv-set-frame-dimensions! c 160 120)
@@ -13,14 +14,10 @@
 	  (IplImage-nChannels im)
 	  (IplImage-alphaChannel im)
 	  (IplImage-depth im))
-  (define bs (IplImage-pixel-bytes im))
-  (define pixel-bytes (* (/ (IplImage-depth im) 8)
-			 (+ (IplImage-nChannels im)
-			    (IplImage-alphaChannel im))))
-  (printf "~a bytes of data; first ~a bytes ~a\n"
-	  (bytes-length bs)
-	  pixel-bytes
-	  (bytes->list (subbytes bs 0 pixel-bytes)))
+  (define pd (IplImage-pixel-data im))
+  (printf "~a bytes of data; first pixel ~a\n"
+	  (bytes-length (pixel-data-bytes pd))
+	  (number->string (get-pixel pd 0 0 #t) 16))
   (newline))
 
 (define start-time (current-inexact-milliseconds))

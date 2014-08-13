@@ -24,7 +24,7 @@
 	 IplImage-BorderConst
 	 IplImage-imageDataOrigin
 
-	 IplImage-pixel-bytes
+	 IplImage-pixel-data
 
 	 cv-create-camera-capture
 	 cv-get-frame-dimensions
@@ -38,6 +38,7 @@
 
 (require ffi/unsafe)
 (require ffi/unsafe/define)
+(require "pixel-data.rkt")
 
 (define highgui-lib (ffi-lib "libopencv_highgui" '("2.4" #f)))
 
@@ -71,8 +72,16 @@
    [BorderConst (_array _int 4)]
    [imageDataOrigin _pointer]))
 
-(define (IplImage-pixel-bytes im)
-  (make-sized-byte-string (IplImage-imageData im) (IplImage-imageSize im)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (IplImage-pixel-data im)
+  (pixel-data (make-sized-byte-string (IplImage-imageData im) (IplImage-imageSize im))
+	      (IplImage-widthStep im)
+	      (IplImage-nChannels im)
+	      (positive? (IplImage-alphaChannel im))
+	      (* (/ (IplImage-depth im) 8)
+		 (+ (IplImage-nChannels im)
+		    (IplImage-alphaChannel im)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
