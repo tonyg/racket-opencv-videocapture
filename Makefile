@@ -1,5 +1,5 @@
-PACKAGENAME=opencv
-COLLECTS=opencv
+PACKAGENAME=opencv-videocapture
+COLLECTS=opencv-videocapture
 
 all: setup
 
