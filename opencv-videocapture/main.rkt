@@ -24,6 +24,8 @@
 	 IplImage-BorderConst
 	 IplImage-imageDataOrigin
 
+	 IplImage-pixel-bytes
+
 	 cv-create-camera-capture
 	 cv-get-frame-dimensions
 	 cv-set-frame-dimensions!
@@ -68,6 +70,9 @@
    [BorderMode (_array _int 4)]
    [BorderConst (_array _int 4)]
    [imageDataOrigin _pointer]))
+
+(define (IplImage-pixel-bytes im)
+  (make-sized-byte-string (IplImage-imageData im) (IplImage-imageSize im)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
