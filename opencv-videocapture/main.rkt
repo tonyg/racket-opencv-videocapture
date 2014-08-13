@@ -109,8 +109,8 @@
   (cvCreateCameraCapture camera-index))
 
 (define (cv-get-frame-dimensions c)
-  (values (cvGetCaptureProperty c CV_CAP_PROP_FRAME_WIDTH)
-	  (cvGetCaptureProperty c CV_CAP_PROP_FRAME_HEIGHT)))
+  (values (inexact->exact (truncate (cvGetCaptureProperty c CV_CAP_PROP_FRAME_WIDTH)))
+	  (inexact->exact (truncate (cvGetCaptureProperty c CV_CAP_PROP_FRAME_HEIGHT)))))
 
 (define (cv-set-frame-dimensions! c width height)
   (cvSetCaptureProperty c CV_CAP_PROP_FRAME_WIDTH (exact->inexact width))
