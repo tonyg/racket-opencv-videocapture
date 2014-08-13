@@ -6,7 +6,8 @@
 	 set-pixel!
 	 clone-pixel-data)
 
-(struct pixel-data (bytes stride channel-count alpha-channel? bytes-per-pixel) #:transparent)
+(struct pixel-data (bytes width height stride channel-count alpha-channel? bytes-per-pixel)
+	#:transparent)
 
 (define (pixel-offset pd x y)
   (+ (* y (pixel-data-stride pd))

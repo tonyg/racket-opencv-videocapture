@@ -76,6 +76,8 @@
 
 (define (IplImage-pixel-data im)
   (pixel-data (make-sized-byte-string (IplImage-imageData im) (IplImage-imageSize im))
+	      (IplImage-width im)
+	      (IplImage-height im)
 	      (IplImage-widthStep im)
 	      (IplImage-nChannels im)
 	      (positive? (IplImage-alphaChannel im))
